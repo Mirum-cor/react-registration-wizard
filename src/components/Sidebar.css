@@ -4,6 +4,37 @@
   padding: 35px 0 470px;
 }
 
-.next-steps {
+.sidebar-wrapper {
+  background: url(../step-connector.png) repeat-y 15px 35px;
+}
+
+ul li {
   color: #999999;
+  list-style: none;
+}
+
+ul li:not(:last-of-type) {
+  margin-bottom: 22px;
+}
+
+.current-step {
+  color: #666666;
+}
+
+.next-steps {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  padding-top: 2px;
+  text-align: center;
+  border: 1px solid #999999;
+  border-radius: 15px;
+  background: #ffffff;
+  transition: all 0.25s linear;
+}
+
+.current-step .next-steps {
+  background: url(../filling-point.png) no-repeat center;
+  border-color: #399aca;
 }

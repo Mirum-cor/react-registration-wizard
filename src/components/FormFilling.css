@@ -1,3 +1,51 @@
-.required-field-sign {
+.form-filling {
+  width: 915px;
+  padding: 35px 0 0 100px;
+}
+
+.form-filling > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+form {
+  text-align: right;
+}
+
+.field-form {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.field-form p {
+  text-transform: uppercase;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 220px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.required-field-sign::before {
   color: #3399cc;
+  content: "* ";
+  font-size: 25px;
+  font-weight: 700;
+}
+
+label {
+  text-transform: uppercase;
+}
+
+input,
+select {
+  width: 220px;
+  height: 25px;
+  border: 1px solid #999999;
+  outline: none;
+  appearance: none;
+  margin-left: 15px;
+  padding-left: 10px;
 }
