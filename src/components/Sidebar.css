@@ -1,0 +1,9 @@
+.sidebar {
+  width: 235px;
+  border-right: 1px solid #999999;
+  padding: 35px 0 470px;
+}
+
+.next-steps {
+  color: #999999;
+}
