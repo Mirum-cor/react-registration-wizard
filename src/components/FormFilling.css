@@ -218,3 +218,17 @@ textarea {
 .password-instructions ul li:not(:last-of-type) {
   margin-bottom: 2px;
 }
+
+.fifth-screen {
+  padding-left: 70px;
+  flex-direction: column;
+  background: url(../done.jpg) no-repeat left center;
+}
+
+.fifth-screen h3 {
+  margin-bottom: 15px;
+}
+
+.fifth-screen span {
+  font-weight: 700;
+}

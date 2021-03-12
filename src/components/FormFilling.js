@@ -7,7 +7,7 @@ export default class FormFilling extends Component {
   render() {
     return (
       <div className="form-filling">
-        <div className="first-screen hidden-screen">
+        <div className="first-screen">
           <form>
             <div className="field-form">
               <label htmlFor="salutation" className="required-field-sign">salutation:</label>
@@ -141,7 +141,7 @@ export default class FormFilling extends Component {
             </div>
           </form>
         </div>
-        <div className="fourth-screen">
+        <div className="fourth-screen hidden-screen">
           <form>
             <div className="field-form">
               <label htmlFor="password" className="required-field-sign">password:</label>
@@ -175,6 +175,10 @@ export default class FormFilling extends Component {
               <li>a number</li>
             </ul>
           </div>
+        </div>
+        <div className="fifth-screen hidden-screen">
+          <h3>Thank you for registering!</h3>
+          <p>A registration confirmation email was sent to the email address provided. Your registration will be sent for approval and activation to the Administrator. <span>You will receive an email when your account is ready to use.</span></p>
         </div>
       </div>
     )
