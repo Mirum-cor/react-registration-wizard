@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './FormFilling.css';
+import captcha from '../captcha-img.png';
 
 export default class FormFilling extends Component {
   state = {};
@@ -103,7 +104,7 @@ export default class FormFilling extends Component {
             </div>
           </form>
         </div>
-        <div className="third-screen">
+        <div className="third-screen hidden-screen">
           <form>
             <div className="field-form">
               <label htmlFor="country" className="required-field-sign">country:</label>
@@ -139,6 +140,41 @@ export default class FormFilling extends Component {
               </select>
             </div>
           </form>
+        </div>
+        <div className="fourth-screen">
+          <form>
+            <div className="field-form">
+              <label htmlFor="password" className="required-field-sign">password:</label>
+              <input id="password" type="password"></input>
+            </div>
+            <div className="field-form">
+              <label htmlFor="confirm-password" className="required-field-sign">confirm password:</label>
+              <input id="confirm-password" type="password"></input>
+            </div>
+            <div className="field-form">
+              <label htmlFor="captcha" className="required-field-sign">captcha:</label>
+              <div className="captcha-wrapper">
+                <img src={captcha} alt="Captcha image"></img>
+                <p className="show-another-captcha">Show another code</p>
+                <input id="captcha" type="text"></input>
+                <p className="note">put in the answer to the math equation</p>
+                <div className="checkbox-row">
+                  <input type="checkbox" name="agreement" id="agreement" />
+                  <label htmlFor="agreement">I have read and accept the terms of use</label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div className="password-instructions">
+            <h6>Instructions:</h6>
+            <p>Password must include:</p>
+            <ul>
+              <li>at least 8 characters</li>
+              <li>an UPPER case letter</li>
+              <li>a lower case letter</li>
+              <li>a number</li>
+            </ul>
+          </div>
         </div>
       </div>
     )
