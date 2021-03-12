@@ -68,3 +68,7 @@ section {
 .next-step-btn:hover {
   background-color: #2b7fa8;
 }
+
+.invisible {
+  display: none;
+}

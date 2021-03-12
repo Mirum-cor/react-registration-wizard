@@ -5,7 +5,7 @@
 }
 
 .sidebar-wrapper {
-  background: url(../step-connector.png) repeat-y 15px 35px;
+  background: url(../img/step-connector.png) repeat-y 15px 35px;
 }
 
 ul li {
@@ -17,8 +17,10 @@ ul li:not(:last-of-type) {
   margin-bottom: 22px;
 }
 
-.current-step {
+.current-step,
+span.all-steps-completed {
   color: #666666;
+  border: none;
 }
 
 .next-steps {
@@ -31,10 +33,21 @@ ul li:not(:last-of-type) {
   border: 1px solid #999999;
   border-radius: 15px;
   background: #ffffff;
-  transition: all 0.25s linear;
+  transition: all 0.1s linear;
 }
 
 .current-step .next-steps {
-  background: url(../filling-point.png) no-repeat center;
+  background: url(../img/filling-point.png) no-repeat center;
   border-color: #399aca;
+}
+
+.passed-steps {
+  background: #3695d8;
+  border-color: #3695d8;
+  color: #ffffff;
+}
+
+.passed-steps-name {
+  color: #3399cc;
+  border-bottom: 1px solid #3399cc;
 }

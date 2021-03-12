@@ -46,7 +46,7 @@ select {
 }
 
 select {
-  background: url(../select-arrow.png) no-repeat 200px center, url(../step-connector.png) no-repeat 195px center;
+  background: url(../img/select-arrow.png) no-repeat 200px center, url(../img/step-connector.png) no-repeat 195px center;
   background-size: 13px 11px, 1px 21px;
   cursor: pointer;
 }
@@ -63,7 +63,6 @@ select {
 }
 
 .second-screen p.required-field-sign {
-  /* position: static; */
   text-align: left;
   font-weight: 500;
   font-size: 18px;
@@ -184,7 +183,7 @@ textarea {
   width: 248px;
   height: 150px;
   padding: 20px 30px 30px 75px;
-  background: url(../password-instructions-background.png) no-repeat;
+  background: url(../img/password-instructions-background.png) no-repeat;
 }
 
 .password-instructions h6 {
@@ -193,7 +192,7 @@ textarea {
   font-size: 14px;
   line-height: 14px;
   width: 90px;
-  background: url(../error.jpg) no-repeat right center;
+  background: url(../img/error.jpg) no-repeat right center;
   background-size: 10px;
 }
 
@@ -222,7 +221,7 @@ textarea {
 .fifth-screen {
   padding-left: 70px;
   flex-direction: column;
-  background: url(../done.jpg) no-repeat left center;
+  background: url(../img/done.jpg) no-repeat left center;
 }
 
 .fifth-screen h3 {
