@@ -6,7 +6,7 @@ export default class FormFilling extends Component {
   render() {
     return (
       <div className="form-filling">
-        <div className="first-screen">
+        <div className="first-screen hidden-screen">
           <form>
             <div className="field-form">
               <label htmlFor="salutation" className="required-field-sign">salutation:</label>
@@ -58,6 +58,48 @@ export default class FormFilling extends Component {
             <div className="field-form">
               <label htmlFor="mobile">mobile:</label>
               <input id="mobile" type="tel" placeholder="(   )   -"></input>
+            </div>
+          </form>
+        </div>
+        <div className="second-screen hidden-screen">
+          <form>
+            <div className="field-form">
+              <p className="required-field-sign">Business Areas:</p>
+              <div className="checkbox-row">
+                <input type="checkbox" name="finance" id="finance" />
+                <label htmlFor="finance">Finance</label>
+              </div>
+              <div className="checkbox-row">
+                <input type="checkbox" name="operations" id="operations" />
+                <label htmlFor="operations">Operations</label>
+              </div>
+              <div className="checkbox-row">
+                <input type="checkbox" name="IT" id="IT" />
+                <label htmlFor="IT">IT</label>
+              </div>
+              <div className="checkbox-row">
+                <input type="checkbox" name="sales" id="sales" />
+                <label htmlFor="sales">Sales</label>
+              </div>
+              <div className="checkbox-row">
+                <input type="checkbox" name="administrative" id="administrative" />
+                <label htmlFor="administrative">Administrative</label>
+              </div>
+              <div className="checkbox-row">
+                <input type="checkbox" name="legal" id="legal" />
+                <label htmlFor="legal">Legal</label>
+              </div>
+              <div className="checkbox-row">
+                <input type="checkbox" name="marketing" id="marketing" />
+                <label htmlFor="marketing">Marketing</label>
+              </div>
+            </div>
+          </form>
+          <form>
+            <div className="field-form">
+              <p className="required-field-sign">Comments:</p>
+              <textarea></textarea>
+              <p className="note">let us know for which network you are requesting access, and any other comments you'd like to leave us</p>
             </div>
           </form>
         </div>

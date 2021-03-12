@@ -8,6 +8,12 @@
   justify-content: space-between;
 }
 
+div.hidden-screen {
+  display: none;
+  opacity: 0;
+  z-index: -5;
+}
+
 form {
   text-align: right;
 }
@@ -17,15 +23,15 @@ form {
   position: relative;
 }
 
-.field-form p {
+.note {
   text-transform: uppercase;
   position: absolute;
   top: 30px;
   right: 0;
   width: 220px;
   text-align: left;
-  font-size: 14px;
-  line-height: 14px;
+  font-size: 11px;
+  line-height: 12px;
 }
 
 .required-field-sign::before {
@@ -39,7 +45,7 @@ label {
   text-transform: uppercase;
 }
 
-input,
+input:not([type="checkbox"]),
 select {
   width: 220px;
   height: 25px;
@@ -48,4 +54,76 @@ select {
   appearance: none;
   margin-left: 15px;
   padding-left: 10px;
+}
+
+.second-screen p.required-field-sign {
+  /* position: static; */
+  text-align: left;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-transform: capitalize;
+}
+
+.checkbox-row {
+  text-align: left;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+.checkbox-row:first-of-type {
+  margin-top: 30px;
+}
+
+.checkbox-row label {
+  text-transform: capitalize;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+input[type="checkbox"] + label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+}
+
+input[type="checkbox"] + label::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  background: #ffffff;
+  border: 1px solid #999999;
+  border-radius: 3px;
+  margin-right: 6px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+  transition: all 0.15s linear;
+}
+
+input[type="checkbox"]:checked + label::before {
+  background: #999999;
+}
+
+textarea {
+  width: 345px;
+  height: 100px;
+  outline: none;
+  border: 1px solid #999999;
+  border-radius: 3px;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.second-screen p.note {
+  width: 345px;
+  top: 150px;
 }
