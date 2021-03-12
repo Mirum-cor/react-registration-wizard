@@ -42,8 +42,6 @@ section {
 .btn {
   width: 100px;
   height: 35px;
-  background-color: #3398cc;
-  color: #ffffff;
   text-transform: uppercase;
   border-radius: 3px;
   outline: none;
@@ -52,6 +50,21 @@ section {
   transition: all 0.15s linear;
 }
 
-.btn:hover {
+.previous-step-btn {
+  background-color: #ffffff;
+  border: 1px solid #999999;
+  margin-right: 20px;
+}
+
+.previous-step-btn:hover {
+  background-color: #c2c2c2;
+}
+
+.next-step-btn {
+  background-color: #3398cc;
+  color: #ffffff;
+}
+
+.next-step-btn:hover {
   background-color: #2b7fa8;
 }

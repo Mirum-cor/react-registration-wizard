@@ -12,8 +12,8 @@ export default class FormFilling extends Component {
               <label htmlFor="salutation" className="required-field-sign">salutation:</label>
               <select id="salutation">
                 <option></option>
-                <option>1</option>
-                <option>2</option>
+                <option>Hello!</option>
+                <option>Hi!</option>
               </select>
             </div>
             <div className="field-form">
@@ -100,6 +100,43 @@ export default class FormFilling extends Component {
               <p className="required-field-sign">Comments:</p>
               <textarea></textarea>
               <p className="note">let us know for which network you are requesting access, and any other comments you'd like to leave us</p>
+            </div>
+          </form>
+        </div>
+        <div className="third-screen">
+          <form>
+            <div className="field-form">
+              <label htmlFor="country" className="required-field-sign">country:</label>
+              <select id="country">
+                <option>United States</option>
+                <option>United Kingdom</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div className="field-form">
+              <label htmlFor="office-name" className="required-field-sign">office name:</label>
+              <input id="office-name" type="text"></input>
+            </div>
+            <div className="field-form">
+              <label htmlFor="address" className="required-field-sign">address:</label>
+              <input id="address" type="text"></input>
+            </div>
+            <div className="field-form">
+              <label htmlFor="postal-code">postal code:</label>
+              <input id="postal-code" type="text"></input>
+            </div>
+            <div className="field-form">
+              <label htmlFor="city">city:</label>
+              <input id="city" type="text"></input>
+            </div>
+            <div className="field-form">
+              <label htmlFor="state" className="required-field-sign">state:</label>
+              <select id="state">
+                <option></option>
+                <option>Texas</option>
+                <option>Michigan</option>
+                <option>Other</option>
+              </select>
             </div>
           </form>
         </div>

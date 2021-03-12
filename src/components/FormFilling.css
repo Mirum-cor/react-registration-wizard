@@ -23,17 +23,6 @@ form {
   position: relative;
 }
 
-.note {
-  text-transform: uppercase;
-  position: absolute;
-  top: 30px;
-  right: 0;
-  width: 220px;
-  text-align: left;
-  font-size: 11px;
-  line-height: 12px;
-}
-
 .required-field-sign::before {
   color: #3399cc;
   content: "* ";
@@ -54,6 +43,23 @@ select {
   appearance: none;
   margin-left: 15px;
   padding-left: 10px;
+}
+
+select {
+  background: url(../select-arrow.png) no-repeat 200px center, url(../step-connector.png) no-repeat 195px center;
+  background-size: 13px 11px, 1px 21px;
+  cursor: pointer;
+}
+
+.note {
+  text-transform: uppercase;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 220px;
+  text-align: left;
+  font-size: 11px;
+  line-height: 12px;
 }
 
 .second-screen p.required-field-sign {
