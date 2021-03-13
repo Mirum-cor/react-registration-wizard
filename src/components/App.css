@@ -70,5 +70,48 @@ section {
 }
 
 .invisible {
-  display: none;
+  opacity: 0;
+  z-index: -5;
+}
+
+@media screen and (max-width: 1200px) {
+  .App {
+    width: 800px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .App {
+    width: 550px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .App {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .App {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .App {
+    width: 320px;
+  }
+
+  .App-footer {
+    flex-direction: column-reverse;
+  }
+
+  .buttons {
+    margin-bottom: 10px;
+  }
+
+  .invisible {
+    display: none;
+  }
 }

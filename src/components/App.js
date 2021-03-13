@@ -17,10 +17,12 @@ export default class App extends Component {
   showPreviousStep(event) {
     event.preventDefault();
     if (this.state.showingScreen !== 0) {
+      if (this.state.showingScreen === 1) {
+        document.querySelector('.previous-step-btn').classList.add('invisible');
+      }
       let showingScreen = this.state.showingScreen;
       showingScreen--;
       this.setState({ showingScreen });
-      // document.querySelector('.next-step-btn').removeAttribute('disabled');
     }
   }
   showNextStep(event) {
@@ -29,16 +31,15 @@ export default class App extends Component {
       let showingScreen = this.state.showingScreen;
       showingScreen++;
       this.setState({ showingScreen });
+      document.querySelector('.previous-step-btn').classList.remove('invisible');
     } else {
       document.querySelector('.buttons').classList.add('invisible');
-      // document.querySelector('.next-step-btn').setAttribute('disabled', 'true');
     }
   }
   /*   componentDidMount() {
     console.log(this.state);
   } */
   componentDidUpdate() {
-    // console.log(this.state);
     if (this.state.showingScreen === 4) {
       document.querySelector('.buttons').classList.add('invisible');
     }
@@ -62,7 +63,7 @@ export default class App extends Component {
           <a href='#'>Back to login</a>
           <div className="buttons">
             <button
-              className='previous-step-btn btn'
+              className='previous-step-btn btn invisible'
               onClick={this.showPreviousStep}
             >
               back

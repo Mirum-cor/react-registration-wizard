@@ -25,7 +25,7 @@ form {
 
 .required-field-sign::before {
   color: #3399cc;
-  content: "* ";
+  content: '* ';
   font-size: 25px;
   font-weight: 700;
 }
@@ -34,7 +34,7 @@ label {
   text-transform: uppercase;
 }
 
-input:not([type="checkbox"]),
+input:not([type='checkbox']),
 select {
   width: 220px;
   height: 25px;
@@ -46,7 +46,8 @@ select {
 }
 
 select {
-  background: url(../img/select-arrow.png) no-repeat 200px center, url(../img/step-connector.png) no-repeat 195px center;
+  background: url(../img/select-arrow.png) no-repeat 200px center,
+    url(../img/step-connector.png) no-repeat 195px center;
   background-size: 13px 11px, 1px 21px;
   cursor: pointer;
 }
@@ -84,20 +85,20 @@ select {
   text-transform: capitalize;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   position: absolute;
   z-index: -1;
   opacity: 0;
 }
 
-input[type="checkbox"] + label {
+input[type='checkbox'] + label {
   display: inline-flex;
   align-items: center;
   user-select: none;
   cursor: pointer;
 }
 
-input[type="checkbox"] + label::before {
+input[type='checkbox'] + label::before {
   content: '';
   display: inline-block;
   width: 15px;
@@ -114,7 +115,7 @@ input[type="checkbox"] + label::before {
   transition: all 0.15s linear;
 }
 
-input[type="checkbox"]:checked + label::before {
+input[type='checkbox']:checked + label::before {
   background: #999999;
 }
 
@@ -211,7 +212,7 @@ textarea {
 }
 
 .password-instructions ul li::before {
-  content: "- ";
+  content: '- ';
 }
 
 .password-instructions ul li:not(:last-of-type) {
@@ -230,4 +231,149 @@ textarea {
 
 .fifth-screen span {
   font-weight: 700;
+}
+
+@media screen and (max-width: 1200px) {
+  .form-filling {
+    width: 625px;
+  }
+
+  .form-filling > div {
+    flex-wrap: wrap;
+  }
+
+  form {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .form-filling {
+    width: 400px;
+    padding-bottom: 50px;
+  }
+
+  .form-filling > div {
+    flex-wrap: wrap;
+  }
+
+  form {
+    width: 250px;
+    text-align: left;
+  }
+
+  input:not([type='checkbox']),
+  select {
+    margin-top: 5px;
+    margin-left: 0;
+  }
+
+  .note {
+    top: 55px;
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
+
+  .second-screen p.note {
+    width: 100%;
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  .show-another-captcha {
+    padding-left: 0;
+  }
+
+  .fourth-screen .note {
+    top: 165px;
+  }
+
+  .checkbox-row {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .form-filling {
+    width: 250px;
+    padding: 35px 0 50px 30px;
+  }
+
+  #password,
+  #confirm-password,
+  .captcha-wrapper img,
+  #captcha,
+  .captcha-wrapper p,
+  .fourth-screen .checkbox-row {
+    width: 100%;
+  }
+
+  .fourth-screen .note {
+    top: 150px;
+  }
+
+  .fourth-screen .checkbox-row:first-of-type {
+    margin-top: 45px;
+  }
+
+  .password-instructions {
+    width: 100%;
+    height: auto;
+    padding: 20px 10px 30px 65px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .form-filling {
+    width: calc(100% - 150px);
+    padding-left: 10px;
+  }
+
+  input:not([type='checkbox']),
+  select {
+    width: 100%;
+  }
+
+  select {
+    background: url(../img/select-arrow.png) no-repeat 98% center,
+      url(../img/step-connector.png) no-repeat 90% center;
+    background-size: 13px 11px, 1px 21px;
+  }
+
+  .fourth-screen .note {
+    top: 160px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .fourth-screen .note {
+    top: 140px;
+  }
+
+  .password-instructions {
+    padding: 15px 10px 15px 55px;
+  }
+
+  .password-instructions h6 {
+    margin-bottom: 5px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .form-filling {
+    width: 170px;
+  }
+
+  .password-instructions {
+    padding: 10px 5px 15px 50px;
+  }
+
+  .password-instructions p,
+  .password-instructions ul li {
+    font-size: 12px;
+    line-height: 12px;
+  }
 }
