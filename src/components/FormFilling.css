@@ -43,6 +43,7 @@ select {
   appearance: none;
   margin-left: 15px;
   padding-left: 10px;
+  transition: all 0.15s linear;
 }
 
 select {
@@ -127,6 +128,8 @@ textarea {
   border-radius: 3px;
   margin-top: 20px;
   padding: 10px;
+  background: #ffffff;
+  transition: all 0.15s linear;
 }
 
 .second-screen p.note {
@@ -231,6 +234,18 @@ textarea {
 
 .fifth-screen span {
   font-weight: 700;
+}
+
+.current-input {
+  background: #f0f4f2;
+}
+
+/* .error-sign {
+  background: url(../img/error.jpg) no-repeat right center;
+} */
+
+.error-background {
+  background: #f8f0de;
 }
 
 @media screen and (max-width: 1200px) {
