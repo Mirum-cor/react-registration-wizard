@@ -33,6 +33,8 @@ span.all-steps-completed {
   border: 1px solid #999999;
   border-radius: 15px;
   background: #ffffff;
+  -webkit-transition: all 0.1s linear;
+  -o-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
 

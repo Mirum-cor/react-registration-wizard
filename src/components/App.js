@@ -13,33 +13,6 @@ export default class App extends Component {
       showingScreen: 0,
       steps: ['Contact Info', 'Areas', 'Address', 'Password', 'Completed'],
       isValidForm: [false, false, false, false],
-      formControls: [
-        {
-          salutation: '',
-          firstName: '',
-          lastName: '',
-          company: '',
-          title: '',
-          email: '',
-          confirmEmail: '',
-          phone: '',
-        },
-        {
-          businessAreas: [],
-          comments: '',
-        },
-        {
-          country: '',
-          officeName: '',
-          address: '',
-          state: '',
-        },
-        {
-          password: '',
-          confirmPassword: '',
-          captcha: '',
-        },
-      ],
     };
     this.showPreviousStep = this.showPreviousStep.bind(this);
     this.showNextStep = this.showNextStep.bind(this);
@@ -65,6 +38,37 @@ export default class App extends Component {
         document
           .querySelector('.previous-step-btn')
           .classList.remove('invisible');
+      } else {
+        const currentScreen = [
+          ...document.querySelector('.form-filling').children,
+        ][this.state.showingScreen];
+        let inputDivs = [];
+        [...currentScreen.children].forEach((form) => {
+          inputDivs = inputDivs.concat(
+            [...form.children].filter((fieldForm) => {
+              if (
+                fieldForm.classList.contains('field-form') &&
+                (fieldForm.lastElementChild.classList.contains('error-sign') ||
+                  fieldForm.lastElementChild.classList.contains(
+                    'textarea-error-sign',
+                  ) ||
+                  (fieldForm.lastElementChild.lastElementChild &&
+                    fieldForm.lastElementChild.lastElementChild.classList.contains(
+                      'captcha-error-sign',
+                    )))
+              ) {
+                return fieldForm;
+              }
+            }),
+          );
+        });
+        inputDivs.forEach((div) => {
+          if (div.lastElementChild.lastElementChild) {
+            div.lastElementChild.lastElementChild.classList.add('error-sign-visible');
+          } else {
+            div.lastElementChild.classList.add('error-sign-visible');
+          }
+        });
       }
     } else {
       document.querySelector('.buttons').classList.add('invisible');

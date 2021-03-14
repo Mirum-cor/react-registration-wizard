@@ -14,9 +14,10 @@ export default class FormFilling extends Component {
     this.captchaBlur = this.captchaBlur.bind(this);
     this.inputBlur = this.inputBlur.bind(this);
     this.inputValidation = this.inputValidation.bind(this);
-    this.inputAddErrorBackground = this.inputAddErrorBackground.bind(this);
     this.validationForm = this.validationForm.bind(this);
     this.highlightCurrentInput = this.highlightCurrentInput.bind(this);
+    this.showErrorMessage = this.showErrorMessage.bind(this);
+    this.hideErrorMessage = this.hideErrorMessage.bind(this);
     this.state = {
       screensArray: [],
       isValidForm: [false, false, false, false],
@@ -168,6 +169,15 @@ export default class FormFilling extends Component {
     formControls[1]['business areas'].value = checkboxValueArray.filter(
       (obj) => obj['checkbox checked'],
     );
+    if (formControls[1]['business areas'].value.length) {
+      event.target.parentNode.parentNode.lastElementChild.classList.remove(
+        'error-sign-visible',
+      );
+    } else {
+      event.target.parentNode.parentNode.lastElementChild.classList.add(
+        'error-sign-visible',
+      );
+    }
     this.setState({ formControls });
     this.validationForm();
     if (this.state.isValidForm[this.props.showingScreen] === true) {
@@ -178,9 +188,15 @@ export default class FormFilling extends Component {
     const formControls = this.state.formControls;
     if (Number(event.target.value) === formControls[3].captcha.captchaAnswer) {
       event.target.classList.remove('error-background');
+      event.target.parentNode.lastElementChild.classList.remove(
+        'error-sign-visible',
+      );
       formControls[3].captcha.value = Number(event.target.value);
     } else {
       event.target.classList.add('error-background');
+      event.target.parentNode.lastElementChild.classList.add(
+        'error-sign-visible',
+      );
     }
     this.validationForm();
     if (this.state.isValidForm[this.props.showingScreen] === true) {
@@ -199,15 +215,42 @@ export default class FormFilling extends Component {
     let regexp = '';
     switch (event.target.type) {
       case 'select-one':
+        if (event.target.value) {
+          event.target.parentNode.lastElementChild.classList.remove(
+            'error-sign-visible',
+          );
+        } else {
+          event.target.parentNode.lastElementChild.classList.add(
+            'error-sign-visible',
+          );
+        }
         return true;
       case 'textarea':
-      case 'text':
         if (event.target.value.length > 2) {
           event.target.classList.remove('error-background');
+          event.target.parentNode.lastElementChild.classList.remove(
+            'error-sign-visible',
+          );
           return true;
         } else {
           event.target.classList.add('error-background');
-          this.inputAddErrorBackground(event)
+          event.target.parentNode.lastElementChild.classList.add(
+            'error-sign-visible',
+          );
+          return false;
+        }
+      case 'text':
+        if (event.target.value.length > 2) {
+          event.target.classList.remove('error-background');
+          event.target.parentNode.lastElementChild.classList.remove(
+            'error-sign-visible',
+          );
+          return true;
+        } else {
+          event.target.classList.add('error-background');
+          event.target.parentNode.lastElementChild.classList.add(
+            'error-sign-visible',
+          );
           return false;
         }
       case 'password':
@@ -220,9 +263,15 @@ export default class FormFilling extends Component {
           password.length >= 8
         ) {
           event.target.classList.remove('error-background');
+          event.target.parentNode.lastElementChild.classList.remove(
+            'error-sign-visible',
+          );
           return true;
         } else {
           event.target.classList.add('error-background');
+          event.target.parentNode.lastElementChild.classList.add(
+            'error-sign-visible',
+          );
           return false;
         }
       case 'email':
@@ -230,9 +279,15 @@ export default class FormFilling extends Component {
         regexp = /(\w+\.)+\w+/g;
         if (email && email.match(regexp)) {
           event.target.classList.remove('error-background');
+          event.target.parentNode.lastElementChild.classList.remove(
+            'error-sign-visible',
+          );
           return true;
         } else {
           event.target.classList.add('error-background');
+          event.target.parentNode.lastElementChild.classList.add(
+            'error-sign-visible',
+          );
           return false;
         }
       case 'tel':
@@ -240,15 +295,18 @@ export default class FormFilling extends Component {
         const phoneMatch = event.target.value.match(regexp);
         if (phoneMatch && phoneMatch.length === 11) {
           event.target.classList.remove('error-background');
+          event.target.parentNode.lastElementChild.classList.remove(
+            'error-sign-visible',
+          );
           return true;
         } else {
           event.target.classList.add('error-background');
+          event.target.parentNode.lastElementChild.classList.add(
+            'error-sign-visible',
+          );
           return false;
         }
     }
-  }
-  inputAddErrorBackground(event) {
-    console.log(event.target.parentNode.classList);
   }
   validationForm() {
     const formControls = this.state.formControls;
@@ -265,6 +323,23 @@ export default class FormFilling extends Component {
       }
     }
     if (
+      formControls[0]['email'].value !== formControls[0]['confirm email'].value
+    ) {
+      document
+        .querySelector('#email')
+        .parentNode.lastElementChild.classList.add('error-sign-visible');
+      document
+        .querySelector('#confirm-email')
+        .parentNode.lastElementChild.classList.add('error-sign-visible');
+    } else {
+      document
+        .querySelector('#email')
+        .parentNode.lastElementChild.classList.remove('error-sign-visible');
+      document
+        .querySelector('#confirm-email')
+        .parentNode.lastElementChild.classList.remove('error-sign-visible');
+    }
+    if (
       this.props.showingScreen === 0 &&
       formControls[this.props.showingScreen]['email'].value !== '' &&
       formControls[this.props.showingScreen]['confirm email'].value !== '' &&
@@ -277,10 +352,10 @@ export default class FormFilling extends Component {
     }
     if (
       this.props.showingScreen === 3 &&
-        (formControls[this.props.showingScreen].captcha.value === '' ||
-      formControls[this.props.showingScreen]['password'].value === '' ||
-      formControls[this.props.showingScreen]['confirm password'].value ===
-        '' ||
+      (formControls[this.props.showingScreen].captcha.value === '' ||
+        formControls[this.props.showingScreen]['password'].value === '' ||
+        formControls[this.props.showingScreen]['confirm password'].value ===
+          '' ||
         formControls[this.props.showingScreen]['password'].value !==
           formControls[this.props.showingScreen]['confirm password'].value)
     ) {
@@ -295,12 +370,40 @@ export default class FormFilling extends Component {
   highlightCurrentInput(event) {
     event.target.classList.add('current-input');
   }
+  showErrorMessage(event) {
+    if (
+      event.target.classList.contains('textarea-error-sign') ||
+      event.target.classList.contains('captcha-error-sign')
+    ) {
+      event.target.previousElementSibling.classList.add(
+        'visible-textarea-error-message',
+      );
+    } else {
+      event.target.previousElementSibling.classList.add(
+        'visible-error-message',
+      );
+    }
+  }
+  hideErrorMessage(event) {
+    if (
+      event.target.classList.contains('textarea-error-sign') ||
+      event.target.classList.contains('captcha-error-sign')
+    ) {
+      event.target.previousElementSibling.classList.remove(
+        'visible-textarea-error-message',
+      );
+    } else {
+      event.target.previousElementSibling.classList.remove(
+        'visible-error-message',
+      );
+    }
+  }
   render() {
     return (
       <div className='form-filling'>
         <div className='first-screen'>
           <form>
-            <div className='field-form error-sign'>
+            <div className='field-form'>
               <label htmlFor='salutation' className='required-field-sign'>
                 salutation:
               </label>
@@ -313,6 +416,15 @@ export default class FormFilling extends Component {
                 <option>Hello!</option>
                 <option>Hi!</option>
               </select>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Salutation is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='first-name' className='required-field-sign'>
@@ -325,6 +437,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>First Name is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='middle-name'>middle name:</label>
@@ -345,6 +466,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Last Name is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='company' className='required-field-sign'>
@@ -357,6 +487,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Company is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='title' className='required-field-sign'>
@@ -369,6 +508,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Title is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
           </form>
           <form>
@@ -384,6 +532,15 @@ export default class FormFilling extends Component {
                 onFocus={this.highlightCurrentInput}
               ></input>
               <p className='note'>email wiil be your login</p>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Email is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='confirm-email' className='required-field-sign'>
@@ -396,6 +553,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>You should confirm your email</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='phone' className='required-field-sign'>
@@ -409,6 +575,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Phone is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='fax'>fax:</label>
@@ -497,6 +672,15 @@ export default class FormFilling extends Component {
                 />
                 <label htmlFor='marketing'>Marketing</label>
               </div>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Please select your personal business area</p>
+              </div>
+              <div
+                className='textarea-error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
           </form>
           <form>
@@ -511,6 +695,15 @@ export default class FormFilling extends Component {
                 let us know for which network you are requesting access, and any
                 other comments you'd like to leave us
               </p>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Comments are required</p>
+              </div>
+              <div
+                className='textarea-error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
           </form>
         </div>
@@ -530,6 +723,15 @@ export default class FormFilling extends Component {
                 <option>United Kingdom</option>
                 <option>Other</option>
               </select>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Country is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='office-name' className='required-field-sign'>
@@ -542,6 +744,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Office Name is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='address' className='required-field-sign'>
@@ -554,6 +765,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Address is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='postal-code'>postal code:</label>
@@ -585,6 +805,15 @@ export default class FormFilling extends Component {
                 <option>Michigan</option>
                 <option>Other</option>
               </select>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>State is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
           </form>
         </div>
@@ -601,6 +830,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>Password is required</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='confirm-password' className='required-field-sign'>
@@ -613,6 +851,15 @@ export default class FormFilling extends Component {
                 onBlur={this.inputBlur}
                 onFocus={this.highlightCurrentInput}
               ></input>
+              <div className='error-message'>
+                <p>Error</p>
+                <p>You should confirm your password</p>
+              </div>
+              <div
+                className='error-sign'
+                onMouseEnter={this.showErrorMessage}
+                onMouseOut={this.hideErrorMessage}
+              ></div>
             </div>
             <div className='field-form'>
               <label htmlFor='captcha' className='required-field-sign'>
@@ -634,6 +881,15 @@ export default class FormFilling extends Component {
                     I have read and accept the terms of use
                   </label>
                 </div>
+                <div className='error-message'>
+                  <p>Error</p>
+                  <p>You should input correct answer</p>
+                </div>
+                <div
+                  className='captcha-error-sign'
+                  onMouseEnter={this.showErrorMessage}
+                  onMouseOut={this.hideErrorMessage}
+                ></div>
               </div>
             </div>
           </form>
