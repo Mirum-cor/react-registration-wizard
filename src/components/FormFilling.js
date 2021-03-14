@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
+import Tesseract from 'tesseract.js';
 import './FormFilling.css';
 import captcha from '../img/captcha-img.png';
 
 export default class FormFilling extends Component {
   constructor(props) {
     super(props);
+    this.recognizingCaptcha = this.recognizingCaptcha.bind(this);
     this.changingFormData = this.changingFormData.bind(this);
+    this.setFormControl = this.setFormControl.bind(this);
     this.setCheckboxFormControl = this.setCheckboxFormControl.bind(this);
+    this.captchaHandler = this.captchaHandler.bind(this);
+    this.captchaBlur = this.captchaBlur.bind(this);
     this.inputBlur = this.inputBlur.bind(this);
     this.inputValidation = this.inputValidation.bind(this);
+    this.inputAddErrorBackground = this.inputAddErrorBackground.bind(this);
     this.validationForm = this.validationForm.bind(this);
     this.highlightCurrentInput = this.highlightCurrentInput.bind(this);
     this.state = {
@@ -43,14 +49,47 @@ export default class FormFilling extends Component {
         {
           password: { value: '', required: true },
           'confirm password': { value: '', required: true },
-          captcha: { value: '', required: true },
+          captcha: {
+            value: '',
+            imgText: '',
+            captchaAnswer: '',
+            required: true,
+          },
         },
       ],
     };
   }
   componentDidMount() {
     const screensArray = [...document.querySelector('.form-filling').children];
-    this.setState({ screensArray, showingScreen: this.props.showingScreen });
+    const formControls = this.state.formControls;
+    formControls[3].captcha.imgText = this.recognizingCaptcha();
+    /*     const captchaToCount = formControls[3].captcha.imgText.slice(0, -2).split('');
+    const dividerPosition = Math.max(captchaToCount.includes('+'), captchaToCount.includes('-'), captchaToCount.includes('*'), captchaToCount.includes('/'));
+    const divider = captchaToCount[dividerPosition];
+    const firstNumber = captchaToCount.slice(0, divider - 1).join(''),
+    const lastNumber = captchaToCount.slice(divider).join('');
+    let captchaAnswer = 0;
+    switch (divider) {
+      case '+':
+        captchaAnswer = +firstNumber + (+lastNumber);
+        break;
+      case '-':
+        captchaAnswer = firstNumber - lastNumber;
+        break;
+      case '*':
+        captchaAnswer = firstNumber * lastNumber;
+        break;
+      case '/':
+        captchaAnswer = firstNumber / lastNumber;
+        break;
+    } */
+    const captchaAnswer = 38;
+    formControls[3].captcha.captchaAnswer = captchaAnswer;
+    this.setState({
+      screensArray,
+      formControls,
+      showingScreen: this.props.showingScreen,
+    });
   }
   componentDidUpdate() {
     const screensArray = this.state.screensArray;
@@ -59,9 +98,20 @@ export default class FormFilling extends Component {
     });
     screensArray[this.props.showingScreen].classList.remove('hidden-screen');
   }
+  recognizingCaptcha() {
+    const file = document
+      .querySelector('.captcha-wrapper')
+      .firstElementChild.getAttribute('src');
+    const lang = 'eng';
+    return Tesseract.recognize(file, lang, {
+      logger: (data) => {},
+    }).then(({ data: { text } }) => {
+      //  console.log(text);
+      return text;
+    });
+  }
   changingFormData(event) {
     if (
-      /* event.target.previousElementSibling && */
       event.target.previousElementSibling.classList.contains(
         'required-field-sign',
       )
@@ -73,35 +123,20 @@ export default class FormFilling extends Component {
       this.setFormControl(event);
     }
     this.validationForm();
-    // console.log(this.state.isValidForm[this.props.showingScreen]);
     if (this.state.isValidForm[this.props.showingScreen] === true) {
-      // if (this.validationForm()) {
       this.props.changeFormValidity();
     }
   }
   setFormControl(event) {
     const dataValue = event.target.value;
     let labelValue = '';
-    // if (event.target.previousElementSibling) {
     labelValue = event.target.previousElementSibling.textContent.slice(0, -1);
-    /*     } else {
-      labelValue = event.target.parentNode.parentNode.firstElementChild.textContent.slice(
-        0,
-        -1,
-      );
-    } */
     const formControls = this.state.formControls;
-    // console.log(formControls[this.props.showingScreen], labelValue, event.target);
     formControls[this.props.showingScreen][labelValue].value = dataValue;
     if (
-      /* event.target.previousElementSibling && */
       event.target.previousElementSibling.classList.contains(
         'required-field-sign',
-      ) /* ||
-      (event.target.parentNode.parentNode.firstElementChild &&
-        event.target.parentNode.parentNode.firstElementChild.classList.contains(
-          'required-field-sign',
-        )) */
+      )
     ) {
       formControls[this.props.showingScreen][labelValue].required = true;
     } else {
@@ -118,7 +153,6 @@ export default class FormFilling extends Component {
     if (checkboxValueArray.length) {
       for (let i = 0; i < checkboxValueArray.length; i++) {
         if (checkboxValueArray[i]['checkbox name'] === checkboxName) {
-          // console.log(checkboxValueArray[i]['checkbox name']);
           checkboxValueArray[i]['checkbox checked'] = checkboxChecked;
           isValueInArray = true;
           break;
@@ -140,19 +174,51 @@ export default class FormFilling extends Component {
       this.props.changeFormValidity();
     }
   }
+  captchaHandler(event) {
+    const formControls = this.state.formControls;
+    if (Number(event.target.value) === formControls[3].captcha.captchaAnswer) {
+      event.target.classList.remove('error-background');
+      formControls[3].captcha.value = Number(event.target.value);
+    } else {
+      event.target.classList.add('error-background');
+    }
+    this.validationForm();
+    if (this.state.isValidForm[this.props.showingScreen] === true) {
+      this.props.changeFormValidity();
+    }
+  }
+  captchaBlur(event) {
+    this.captchaHandler(event);
+    event.target.classList.remove('current-input');
+  }
   inputBlur(event) {
     this.changingFormData(event);
     event.target.classList.remove('current-input');
   }
   inputValidation(event) {
     let regexp = '';
-    // console.log(event.target.type);
     switch (event.target.type) {
       case 'select-one':
         return true;
       case 'textarea':
       case 'text':
         if (event.target.value.length > 2) {
+          event.target.classList.remove('error-background');
+          return true;
+        } else {
+          event.target.classList.add('error-background');
+          this.inputAddErrorBackground(event)
+          return false;
+        }
+      case 'password':
+        regexp = /[a-z][A-Z][0-9]/g;
+        const password = event.target.value;
+        if (
+          password.match(/[a-z]/) &&
+          password.match(/[A-Z]/) &&
+          password.match(/[0-9]/) &&
+          password.length >= 8
+        ) {
           event.target.classList.remove('error-background');
           return true;
         } else {
@@ -179,18 +245,17 @@ export default class FormFilling extends Component {
           event.target.classList.add('error-background');
           return false;
         }
-      case 'password':
-        break;
     }
   }
-  // inputErrorBackground() {}
+  inputAddErrorBackground(event) {
+    console.log(event.target.parentNode.classList);
+  }
   validationForm() {
     const formControls = this.state.formControls;
     const isValidForm = this.state.isValidForm;
     for (let key in formControls[this.props.showingScreen]) {
-      // console.log(formControls[this.props.showingScreen][key].value.length);
       if (
-        /* this.props.showingScreen !== 1 && */
+        this.props.showingScreen !== 3 &&
         formControls[this.props.showingScreen][key].required &&
         !formControls[this.props.showingScreen][key].value.length
       ) {
@@ -206,16 +271,23 @@ export default class FormFilling extends Component {
       formControls[this.props.showingScreen]['email'].value !==
         formControls[this.props.showingScreen]['confirm email'].value
     ) {
-      isValidForm[0] = false;
+      isValidForm[this.props.showingScreen] = false;
       this.setState({ isValidForm });
       return false;
     }
-    /*     if (this.props.showingScreen === 1 && formControls[this.props.showingScreen]['business areas'].value) {
-      console.log(this.props.showingScreen);
-      isValidForm[0] = true;
+    if (
+      this.props.showingScreen === 3 &&
+        (formControls[this.props.showingScreen].captcha.value === '' ||
+      formControls[this.props.showingScreen]['password'].value === '' ||
+      formControls[this.props.showingScreen]['confirm password'].value ===
+        '' ||
+        formControls[this.props.showingScreen]['password'].value !==
+          formControls[this.props.showingScreen]['confirm password'].value)
+    ) {
+      isValidForm[this.props.showingScreen] = false;
       this.setState({ isValidForm });
-      return true;
-    } */
+      return false;
+    }
     isValidForm[this.props.showingScreen] = true;
     this.setState({ isValidForm });
     return true;
@@ -450,9 +522,10 @@ export default class FormFilling extends Component {
               </label>
               <select
                 id='country'
-                defaultValue='United States'
+                defaultValue=''
                 onInput={this.changingFormData}
               >
+                <option></option>
                 <option>United States</option>
                 <option>United Kingdom</option>
                 <option>Other</option>
@@ -548,7 +621,12 @@ export default class FormFilling extends Component {
               <div className='captcha-wrapper'>
                 <img src={captcha} alt='Captcha image'></img>
                 <p className='show-another-captcha'>Show another code</p>
-                <input id='captcha' type='text'></input>
+                <input
+                  id='captcha'
+                  type='text'
+                  onInput={this.captchaHandler}
+                  onBlur={this.captchaBlur}
+                ></input>
                 <p className='note'>put in the answer to the math equation</p>
                 <div className='checkbox-row'>
                   <input type='checkbox' name='agreement' id='agreement' />

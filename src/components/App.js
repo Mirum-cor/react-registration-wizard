@@ -6,6 +6,8 @@ import FormFilling from './FormFilling';
 export default class App extends Component {
   constructor() {
     super();
+    this.showPreviousStep = this.showPreviousStep.bind(this);
+    this.showNextStep = this.showNextStep.bind(this);
     this.changeFormValidity = this.changeFormValidity.bind(this);
     this.state = {
       showingScreen: 0,
@@ -56,7 +58,6 @@ export default class App extends Component {
   showNextStep(event) {
     event.preventDefault();
     if (this.state.showingScreen < 4) {
-      console.log(this.state.isValidForm, this.state.isValidForm[this.state.showingScreen]);
       if (this.state.isValidForm[this.state.showingScreen]) {
         let showingScreen = this.state.showingScreen;
         showingScreen++;
@@ -70,7 +71,6 @@ export default class App extends Component {
     }
   }
   changeFormValidity() {
-    console.log(this.state, this.state.showingScreen, this.state.isValidForm);
     const isValidForm = this.state.isValidForm;
     isValidForm[this.state.showingScreen] = true;
     this.setState({ isValidForm });
